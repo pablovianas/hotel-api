@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: mysql
+    image: mysql
+    restart: always
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DB_NAME
+    volumes:
+      - mysql_data:/var/lib/mysql
+  app:
+    depends_on:
+      - db
+    container_name: app
+    command: /bin/sh -c "/wait-for-it.sh db 3306 npm run start"
+    build: .
+    restart: always
+    env_file: ./.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+volumes:
+  mysql_data:
