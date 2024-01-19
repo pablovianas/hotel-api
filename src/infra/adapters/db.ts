@@ -19,14 +19,14 @@ const checkDatabaseConnection = async () => {
    
     const connection = await pool.getConnection();
     
-    console.log('Conexão bem-sucedida com o banco de dados!');
+    console.log('Database connected successfully');
 
     if (connection) await createDatabaseTables();
 
     connection.release();
   } catch (error) {
   
-    console.error('Erro ao conectar ao banco de dados:', error);
+    console.error('Error to connect database', error);
   }
 };
 

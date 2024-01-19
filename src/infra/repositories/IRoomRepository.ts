@@ -25,7 +25,7 @@ export class RoomRepository {
       number: row.number,
       status: row.status
     }));
-    console.log(rooms);
+    
     return rooms;
   }
 

@@ -1,7 +1,5 @@
 import { ResultSetHeader } from "mysql2";
 import { pool } from "../infra/adapters/db";
-import * as mysql from 'mysql2/typings/mysql'
-
 
 export const createDatabaseTables = async () => {
   const createHotelTableQuery = `
@@ -35,21 +33,18 @@ export const createDatabaseTables = async () => {
 
     try {
       await pool.query(createHotelTableQuery);
-      console.log('Hotel table created successfully');
     } catch (err) {
       console.error('Error creating hotel table:', err);
     }
 
     try {
       await pool.query(createRoomTableQuery);
-      console.log('Room table created successfully');
     } catch (err) {
       console.error('Error creating room table:', err);
     }
 
     try {
       await pool.query(createReservationTableQuery);
-      console.log('Reservation table created successfully');
     } catch (err) {
       console.error('Error creating reservation table:', err);
     }
@@ -70,7 +65,6 @@ export const generateFakeData = async () => {
     const roomsAvailable = 50;
     const roomsBooked = 0;
 
-    // Inserir hotel no banco de dados
     const hotelResult = await pool.query(
       'INSERT INTO hotels (name, address, rooms_available, rooms_booked) VALUES (?, ?, ? , ?)',
       [hotelName, JSON.stringify(hotelAddress), roomsAvailable, roomsBooked]
@@ -85,7 +79,6 @@ export const generateFakeData = async () => {
       const roomPrice = 80;
       const roomStatus = j % 2 === 0 ? 'AVAILABLE' : 'UNAVAILABLE';
 
-      // Inserir quarto no banco de dados
       await pool.query(
         'INSERT INTO rooms (hotel_id, number, price, status) VALUES (?, ?, ?, ?)',
         [hotelId, roomNumber, roomPrice, roomStatus]
@@ -93,7 +86,7 @@ export const generateFakeData = async () => {
     }
   }
 
-  console.log('Dados falsos gerados com sucesso.');
+  console.log('Fake data generated successfully');
 };
 
 
